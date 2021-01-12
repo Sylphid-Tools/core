@@ -1,6 +1,6 @@
 name = "sylphid_core"
 
-version = "0.0.0"
+version = "0.1.0"
 
 build_requires = ["python"]
 
