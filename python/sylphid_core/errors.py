@@ -7,4 +7,4 @@ class ContextError(SylphidError):
 
 
 class TemplateError(SylphidError):
-    """Error raised when a path error is encountered."""
+    """Error raised when a template error is encountered."""
