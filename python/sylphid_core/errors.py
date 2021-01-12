@@ -4,4 +4,3 @@ class SylphidError(Exception):
 
 class ContextError(SylphidError):
     """Error raised when a context error is encountered."""
-

@@ -3,20 +3,22 @@ from sylphid_core import constants, errors
 
 
 def from_environment():
-    """ Build a Context object representing the current environments context.
+    """Build a Context object representing the current environments context.
 
     Returns:
         dict[str,str]: the context data.
 
     """
-    fields = {field: os.environ.get(env) for field, env in
-              zip(constants.CTX_DICT_KEY_ORDER, constants.CTX_ENV_KEY_ORDER)}
+    fields = {
+        field: os.environ.get(env)
+        for field, env in zip(constants.CTX_DICT_KEY_ORDER, constants.CTX_ENV_KEY_ORDER)
+    }
     validate_context(fields)
     return fields
 
 
 def from_short_path(path):
-    """ Context can be represented by joining its ordered members into a path /project/sequence/shot/task
+    """Context can be represented by joining its ordered members into a path /project/sequence/shot/task
 
     Args:
         path(str): the path to parse.
@@ -35,28 +37,27 @@ def from_short_path(path):
     if len(elements) > len(constants.CTX_DICT_KEY_ORDER):
         raise errors.ContextError(
             "too many members in path: '{}'. expected at most: {}.".format(
-                path,
-                len(constants.CTX_DICT_KEY_ORDER)
+                path, len(constants.CTX_DICT_KEY_ORDER)
             )
         )
 
-    fields = {
-        k: v for k, v in zip(constants.CTX_DICT_KEY_ORDER, elements)
-    }
+    fields = {k: v for k, v in zip(constants.CTX_DICT_KEY_ORDER, elements)}
 
     validate_context(fields)
     return fields
 
 
 def validate_context(fields):
-    """ Validate a set of context fields.
+    """Validate a set of context fields.
 
     Args:
         fields(dict[str,str]): the context fields to use
     """
 
     # At minimum a context must define a root field. (project)
-    if constants.CTX_DICT_KEY_ORDER[0] not in fields or fields.get(constants.CTX_DICT_KEY_ORDER[0]) in [None, ""]:
+    if constants.CTX_DICT_KEY_ORDER[0] not in fields or fields.get(
+        constants.CTX_DICT_KEY_ORDER[0]
+    ) in [None, ""]:
         raise errors.ContextError("No Context Found.")
 
     reversed_names = list(reversed(constants.CTX_DICT_KEY_ORDER))
@@ -73,5 +74,7 @@ def validate_context(fields):
         child, parent = pair
         if child and not parent:
             raise errors.ContextError(
-                "{} requires: {} to be set".format(reversed_names[index - 1], reversed_names[index])
+                "{} requires: {} to be set".format(
+                    reversed_names[index - 1], reversed_names[index]
+                )
             )

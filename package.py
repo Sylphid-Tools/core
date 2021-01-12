@@ -8,7 +8,7 @@ tests = {
     "unit": {
         "command": "pytest -sr {root}/tests",
         "requires": ["pytest", "pytest_cov"],
-        "run_on": ["default", "pre_install"]
+        "run_on": ["default", "pre_install"],
     }
 }
 
