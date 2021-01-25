@@ -1,4 +1,3 @@
-import string
 import requests
 from sylphid_core import errors as syl_errors
 from sylphid_core.asset_management import util
