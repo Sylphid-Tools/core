@@ -3,9 +3,7 @@ import string
 
 
 def _serialise_dict(value, factory):
-    elements = [
-        '{}:{}'.format(k, factory(v)) for k, v in value.items()
-    ]
+    elements = ["{}:{}".format(k, factory(v)) for k, v in value.items()]
     return ",".join(elements)
 
 
@@ -14,9 +12,7 @@ def serialise_dict(value, factory):
 
 
 def serialise_list(value, factory):
-    elements = [
-        factory(v) for v in value
-    ]
+    elements = [factory(v) for v in value]
     return "[{}]".format(",".join(elements))
 
 
@@ -34,11 +30,13 @@ def serialise(value):
 
 
 def generate_mutation(name, method, input_data, type_, fields):
-    template = string.Template("mutation $name {$method(input: $input){$type_ {$fields}}}")
+    template = string.Template(
+        "mutation $name {$method(input: $input){$type_ {$fields}}}"
+    )
     return template.substitute(
         name=name,
         method=method,
         input=serialise(input_data),
         fields=",".join(fields),
-        type_=type_
+        type_=type_,
     )

@@ -9,6 +9,7 @@ import sylphid_core.errors as syl_errors
 def patched_api_module(monkeypatch):
     monkeypatch.setitem(sys.modules, "requests", mock.MagicMock())
     from sylphid_core.asset_management import api
+
     yield api
 
 
@@ -32,9 +33,7 @@ class TestClient:
 
             response = patched_api_module.requests.post.return_value
             response.status_code = 200
-            response.json.return_value = {
-                "errors": ["error"]
-            }
+            response.json.return_value = {"errors": ["error"]}
 
             with pytest.raises(syl_errors.AssetManagementError):
                 client = patched_api_module.Client("")
@@ -47,9 +46,7 @@ class TestClient:
             response = patched_api_module.requests.post.return_value
             response.status_code = 200
             expected = {"key": "value"}
-            response.json.return_value = {
-                "data": {"name": {"type": expected}}
-            }
+            response.json.return_value = {"data": {"name": {"type": expected}}}
 
             client = patched_api_module.Client("")
             assert client._mutate("name", "", {}, "type", []) == expected

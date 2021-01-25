@@ -33,15 +33,23 @@ class TestSerialise:
 class TestGenerateMutation:
     def test_basic(self):
         expected = 'mutation name {method(input: {key:"value"}){type {id}}}'
-        result = util.generate_mutation("name", "method", {"key": "value"}, "type", ["id"])
+        result = util.generate_mutation(
+            "name", "method", {"key": "value"}, "type", ["id"]
+        )
         assert result == expected
 
     def test_multiple_fields(self):
         expected = 'mutation name {method(input: {key:"value"}){type {field,field1}}}'
-        result = util.generate_mutation("name", "method", {"key": "value"}, "type", ["field", "field1"])
+        result = util.generate_mutation(
+            "name", "method", {"key": "value"}, "type", ["field", "field1"]
+        )
         assert result == expected
 
     def test_multiple_inputs(self):
-        expected = 'mutation name {method(input: [{key:"value"},{key1:"value1"}]){type {id}}}'
-        result = util.generate_mutation("name", "method", [{"key": "value"}, {"key1": "value1"}], "type", ["id"])
+        expected = (
+            'mutation name {method(input: [{key:"value"},{key1:"value1"}]){type {id}}}'
+        )
+        result = util.generate_mutation(
+            "name", "method", [{"key": "value"}, {"key1": "value1"}], "type", ["id"]
+        )
         assert result == expected

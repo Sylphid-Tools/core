@@ -18,16 +18,9 @@ class Client:
         return self._mutate("addWorkarea", "addWorkarea", data, "workarea", fields)
 
     def _mutate(self, name, method, input_data, type_, fields):
-        mutation = util.generate_mutation(
-            name, method, input_data, type_, fields
-        )
+        mutation = util.generate_mutation(name, method, input_data, type_, fields)
 
-        response = requests.post(
-            self.url,
-            json={
-                "query": mutation
-            }
-        )
+        response = requests.post(self.url, json={"query": mutation})
 
         if response.status_code == 200:
             data = response.json()
