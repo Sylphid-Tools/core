@@ -8,3 +8,7 @@ class ContextError(SylphidError):
 
 class TemplateError(SylphidError):
     """Error raised when a template error is encountered."""
+
+
+class AssetManagementError(SylphidError):
+    """Error raised when a asset management error is encountered."""

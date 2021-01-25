@@ -1,8 +1,10 @@
 name = "sylphid_core"
 
-version = "0.2.0"
+version = "0.3.0"
 
 build_requires = ["python"]
+
+requires = ["requests"]
 
 tests = {
     "unit": {
